@@ -1,13 +1,14 @@
 {
     "type": "extension",
     "id": "com.fastspot.events",
-    "version": "2.0",
-    "revision": 2,
+    "version": "1.0",
+    "revision": 3,
     "compatibility": "4.2+",
     "title": "Events",
-    "description": "",
+    "description": "A very fast (performance wise) events system that supports recurring events and a powerful class for pulling events into the front end of your site.",
     "keywords": [
-        ""
+        "events",
+        "recurring"
     ],
     "author": {
         "name": "Tim Buckingham",
@@ -259,24 +260,23 @@
                         "table": "btx_events_events",
                         "fields": [
                             {
-                                "column": "title",
-                                "type": "text",
                                 "title": "Title",
                                 "subtitle": "",
-                                "options": []
+                                "type": "text",
+                                "options": [],
+                                "column": "title"
                             },
                             {
-                                "column": "description",
-                                "type": "html",
                                 "title": "Description",
                                 "subtitle": "",
-                                "options": []
+                                "type": "html",
+                                "options": [],
+                                "column": "description"
                             },
                             {
-                                "column": "image",
-                                "type": "upload",
                                 "title": "Image",
                                 "subtitle": "(crops to 600x400)",
+                                "type": "upload",
                                 "options": {
                                     "directory": "files/events/",
                                     "image": "on",
@@ -291,13 +291,13 @@
                                             "grayscale": ""
                                         }
                                     }
-                                }
+                                },
+                                "column": "image"
                             },
                             {
-                                "column": "__mtm-1__",
-                                "type": "many-to-many",
                                 "title": "Categories",
                                 "subtitle": "",
+                                "type": "many-to-many",
                                 "options": {
                                     "mtm-connecting-table": "btx_events_event_categories",
                                     "mtm-my-id": "event",
@@ -306,33 +306,38 @@
                                     "mtm-other-descriptor": "name",
                                     "mtm-sort": "`name` ASC",
                                     "mtm-list-parser": "BTXEvents::parseMTM"
-                                }
+                                },
+                                "column": "__mtm-1__"
                             },
                             {
-                                "column": "all_day",
-                                "type": "com.fastspot.events*date-chooser",
                                 "title": "Date Chooser",
                                 "subtitle": "",
+                                "type": "com.fastspot.events*date-chooser",
                                 "options": {
                                     "function": "BTXEvents::drawFormDateTime",
                                     "process_function": "BTXEvents::parseFormDateTime"
-                                }
+                                },
+                                "column": "all_day"
                             },
                             {
-                                "column": "route",
-                                "type": "route",
                                 "title": "Route",
                                 "subtitle": "",
+                                "type": "route",
                                 "options": {
                                     "source": "title"
-                                }
+                                },
+                                "column": "route"
                             }
                         ],
                         "default_position": "",
                         "return_view": "147",
                         "return_url": "",
                         "tagging": "",
-                        "hooks": null
+                        "hooks": {
+                            "pre": "",
+                            "post": "",
+                            "publish": "BTXEvents::publishHook"
+                        }
                     }
                 ],
                 "embed_forms": [],
