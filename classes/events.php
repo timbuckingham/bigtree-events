@@ -10,6 +10,7 @@
 			Constructor:
 				Re-caches stale events.
 		*/
+		
 		function __construct() {
 			$q = sqlquery("SELECT * FROM btx_events_events WHERE recurrence_type != '' AND (last_updated < '".date("Y-m-d",strtotime("-1 year"))."' OR last_updated IS NULL)");
 			
