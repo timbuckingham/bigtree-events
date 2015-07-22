@@ -1,9 +1,9 @@
 {
     "type": "extension",
     "id": "com.fastspot.events",
-    "version": "1.0",
-    "revision": 3,
-    "compatibility": "4.2+",
+    "version": "1.1",
+    "revision": 4,
+    "compatibility": "4.2.4+",
     "title": "Events",
     "description": "A very fast (performance wise) events system that supports recurring events and a powerful class for pulling events into the front end of your site.",
     "keywords": [
@@ -22,7 +22,7 @@
         "module_groups": [],
         "modules": [
             {
-                "id": "165",
+                "id": "5",
                 "group": null,
                 "name": "Events",
                 "route": "com.fastspot.events*events",
@@ -37,21 +37,21 @@
                 "extension": "com.fastspot.events",
                 "actions": [
                     {
-                        "id": "999",
-                        "module": "165",
+                        "id": "18",
+                        "module": "5",
                         "name": "View Events",
                         "route": "",
                         "in_nav": "on",
                         "form": null,
-                        "view": "147",
+                        "view": "5",
                         "report": null,
                         "class": "list",
                         "level": "0",
                         "position": "6"
                     },
                     {
-                        "id": "1000",
-                        "module": "165",
+                        "id": "19",
+                        "module": "5",
                         "name": "Search",
                         "route": "search",
                         "in_nav": "on",
@@ -63,8 +63,8 @@
                         "position": "5"
                     },
                     {
-                        "id": "1001",
-                        "module": "165",
+                        "id": "20",
+                        "module": "5",
                         "name": "Calendar",
                         "route": "calendar",
                         "in_nav": "on",
@@ -76,12 +76,12 @@
                         "position": "4"
                     },
                     {
-                        "id": "1002",
-                        "module": "165",
+                        "id": "21",
+                        "module": "5",
                         "name": "Add Event",
                         "route": "add",
                         "in_nav": "on",
-                        "form": "269",
+                        "form": "4",
                         "view": null,
                         "report": null,
                         "class": "add",
@@ -89,25 +89,25 @@
                         "position": "3"
                     },
                     {
-                        "id": "1003",
-                        "module": "165",
+                        "id": "22",
+                        "module": "5",
                         "name": "View Categories",
                         "route": "categories",
                         "in_nav": "on",
                         "form": null,
-                        "view": "148",
+                        "view": "4",
                         "report": null,
                         "class": "category",
                         "level": "0",
                         "position": "2"
                     },
                     {
-                        "id": "1004",
-                        "module": "165",
+                        "id": "23",
+                        "module": "5",
                         "name": "Add Category",
                         "route": "add-category",
                         "in_nav": "on",
-                        "form": "270",
+                        "form": "3",
                         "view": null,
                         "report": null,
                         "class": "add",
@@ -115,12 +115,12 @@
                         "position": "1"
                     },
                     {
-                        "id": "1005",
-                        "module": "165",
+                        "id": "24",
+                        "module": "5",
                         "name": "Edit Event",
                         "route": "edit",
                         "in_nav": "",
-                        "form": "269",
+                        "form": "4",
                         "view": null,
                         "report": null,
                         "class": "edit",
@@ -128,12 +128,12 @@
                         "position": "0"
                     },
                     {
-                        "id": "1006",
-                        "module": "165",
+                        "id": "25",
+                        "module": "5",
                         "name": "Edit Category",
                         "route": "edit-category",
                         "in_nav": "",
-                        "form": "270",
+                        "form": "3",
                         "view": null,
                         "report": null,
                         "class": "edit",
@@ -143,8 +143,8 @@
                 ],
                 "views": [
                     {
-                        "id": "148",
-                        "module": "165",
+                        "id": "4",
+                        "module": "5",
                         "title": "Categories",
                         "description": "",
                         "type": "nested",
@@ -165,12 +165,12 @@
                             "edit": "on",
                             "delete": "on"
                         },
-                        "related_form": "270",
-                        "preview_url": ""
+                        "preview_url": "",
+                        "related_form": null
                     },
                     {
-                        "id": "147",
-                        "module": "165",
+                        "id": "5",
+                        "module": "5",
                         "title": "Events",
                         "description": "",
                         "type": "searchable",
@@ -206,14 +206,14 @@
                             "edit": "on",
                             "delete": "on"
                         },
-                        "related_form": null,
-                        "preview_url": ""
+                        "preview_url": "",
+                        "related_form": null
                     }
                 ],
                 "forms": [
                     {
-                        "id": "270",
-                        "module": "165",
+                        "id": "3",
+                        "module": "5",
                         "title": "Category",
                         "table": "btx_events_categories",
                         "fields": [
@@ -227,7 +227,8 @@
                                     "allow-empty": "Yes",
                                     "pop-table": "btx_events_categories",
                                     "pop-description": "name",
-                                    "pop-sort": "`name` ASC"
+                                    "pop-sort": "`name` ASC",
+                                    "column": "parent"
                                 }
                             },
                             {
@@ -235,7 +236,9 @@
                                 "type": "text",
                                 "title": "Name",
                                 "subtitle": "",
-                                "options": []
+                                "options": {
+                                    "column": "name"
+                                }
                             },
                             {
                                 "column": "route",
@@ -243,40 +246,46 @@
                                 "title": "Route",
                                 "subtitle": "",
                                 "options": {
-                                    "source": "name"
+                                    "source": "name",
+                                    "column": "route"
                                 }
                             }
                         ],
                         "default_position": "Bottom",
-                        "return_view": "148",
+                        "return_view": "4",
                         "return_url": "",
                         "tagging": "",
                         "hooks": null
                     },
                     {
-                        "id": "269",
-                        "module": "165",
+                        "id": "4",
+                        "module": "5",
                         "title": "Event",
                         "table": "btx_events_events",
                         "fields": [
                             {
+                                "column": "title",
+                                "type": "text",
                                 "title": "Title",
                                 "subtitle": "",
-                                "type": "text",
-                                "options": [],
-                                "column": "title"
+                                "options": {
+                                    "column": "title"
+                                }
                             },
                             {
+                                "column": "description",
+                                "type": "html",
                                 "title": "Description",
                                 "subtitle": "",
-                                "type": "html",
-                                "options": [],
-                                "column": "description"
+                                "options": {
+                                    "column": "description"
+                                }
                             },
                             {
+                                "column": "image",
+                                "type": "upload",
                                 "title": "Image",
                                 "subtitle": "(crops to 600x400)",
-                                "type": "upload",
                                 "options": {
                                     "directory": "files/events/",
                                     "image": "on",
@@ -290,14 +299,15 @@
                                             "height": "400",
                                             "grayscale": ""
                                         }
-                                    }
-                                },
-                                "column": "image"
+                                    },
+                                    "column": "image"
+                                }
                             },
                             {
+                                "column": "__mtm-1__",
+                                "type": "many-to-many",
                                 "title": "Categories",
                                 "subtitle": "",
-                                "type": "many-to-many",
                                 "options": {
                                     "mtm-connecting-table": "btx_events_event_categories",
                                     "mtm-my-id": "event",
@@ -305,32 +315,34 @@
                                     "mtm-other-table": "btx_events_categories",
                                     "mtm-other-descriptor": "name",
                                     "mtm-sort": "`name` ASC",
-                                    "mtm-list-parser": "BTXEvents::parseMTM"
-                                },
-                                "column": "__mtm-1__"
+                                    "mtm-list-parser": "BTXEvents::parseMTM",
+                                    "column": "__mtm-1__"
+                                }
                             },
                             {
+                                "column": "all_day",
+                                "type": "com.fastspot.events*date-chooser",
                                 "title": "Date Chooser",
                                 "subtitle": "",
-                                "type": "com.fastspot.events*date-chooser",
                                 "options": {
                                     "function": "BTXEvents::drawFormDateTime",
-                                    "process_function": "BTXEvents::parseFormDateTime"
-                                },
-                                "column": "all_day"
+                                    "process_function": "BTXEvents::parseFormDateTime",
+                                    "column": "all_day"
+                                }
                             },
                             {
+                                "column": "route",
+                                "type": "route",
                                 "title": "Route",
                                 "subtitle": "",
-                                "type": "route",
                                 "options": {
-                                    "source": "title"
-                                },
-                                "column": "route"
+                                    "source": "title",
+                                    "column": "route"
+                                }
                             }
                         ],
                         "default_position": "",
-                        "return_view": "147",
+                        "return_view": "5",
                         "return_url": "",
                         "tagging": "",
                         "hooks": {

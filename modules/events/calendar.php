@@ -5,3 +5,6 @@
 	?>
 </div>
 <br class="clear"/>
+<script>
+	var BTXEventsModuleRoot = "<?=MODULE_ROOT?>";
+</script>

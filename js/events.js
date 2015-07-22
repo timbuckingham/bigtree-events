@@ -16,7 +16,7 @@ $(document).ready(function() {
     // Calendar
     $CalendarData.on("click", ".month_button", function(ev) {
         ev.preventDefault();
-        $CalendarData.load("admin_root/*/com.fastspot.events/ajax/month/?month=" + $(this).attr("href").substr(1));
+        $CalendarData.load("admin_root/*/com.fastspot.events/ajax/month/?module_root=" + escape(BTXEventsModuleRoot) + "&month=" + $(this).attr("href").substr(1));
     });
 
     // Events Forms
