@@ -31,8 +31,8 @@
 #btx_events_calendar header nav { margin: 18px 0 0 347px; position: absolute; }
 #btx_events_calendar header nav * { display: block; float: left; }
 #btx_events_calendar header nav span { color: #333; font-size: 14px; text-align: center; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8); width: 240px; }
-#btx_events_calendar header a.previous span { background: url("../images/icon-sprite.svg") no-repeat scroll -137px -116px transparent; display: block; height: 9px; overflow: hidden; text-indent: -1000em; width: 6px; }
-#btx_events_calendar header a.next span { background: url("../images/icon-sprite.svg") no-repeat scroll -137px -125px transparent; display: block; height: 9px; overflow: hidden; text-indent: -1000em; width: 6px; }
+#btx_events_calendar header a.previous span { background: url("../../../images/icon-sprite.svg") no-repeat scroll -137px -116px transparent; display: block; height: 9px; overflow: hidden; text-indent: -1000em; width: 6px; }
+#btx_events_calendar header a.next span { background: url("../../../images/icon-sprite.svg") no-repeat scroll -137px -125px transparent; display: block; height: 9px; overflow: hidden; text-indent: -1000em; width: 6px; }
 #btx_events_calendar header a.previous, #btx_events_calendar header a.next { height: 9px; padding: 3px 5px; width: 6px; }
 
 #btx_events_calendar summary { background: #FFF; border-bottom: 1px solid #CCC; overflow: hidden; }
