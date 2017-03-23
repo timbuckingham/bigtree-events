@@ -1,5 +1,5 @@
 <div id="btx_events_calendar_data">
-	<?
+	<?php
 		$month = time();
 		include EXTENSION_ROOT."ajax/month.php";
 	?>

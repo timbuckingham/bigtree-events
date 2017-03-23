@@ -1,7 +1,8 @@
-<?
+<?php
 	if (isset($_GET["month"])) {
 		$month = $_GET["month"];
 	}
+
 	$month = strtotime(date("F 1, Y",$month));
 	
 	// Get the events for this month
@@ -28,7 +29,7 @@
 		<section>Saturday</section>
 	</summary>
 	<ul class="dates">
-		<?
+		<?php
 			// Get the number of days in the previous month.
 			$pmonth_days = date("t",strtotime(date("F 1, Y",$month))-60*60);
 			// Get the first day of the month's day (Sunday, Monday, etc) in numeric form.
@@ -42,6 +43,7 @@
 			$full_rows = $days_after_first_row - ($days_after_first_row % 7);
 			$days_in_last_row = $days_in_month - $days_in_first_row - $full_rows;
 			$rows = 1 + ($full_rows / 7);
+			
 			if ($days_in_last_row) {
 				$rows++;
 			}
@@ -51,33 +53,36 @@
 			
 			// Show the first couple days of the last month grayed out.
 			$d = $first_day_of_month;
+			
 			while ($d) {
 		?>
 		<li><span class="not_active_month"><?=($pmonth_days-$d+1)?></span></li>
-		<?
+		<?php
 				$d--;
 				$y++;
 			}
 			
 			// Let's go through this month. $x is the counter for the day of the month.
 			$x = 0;
+			
 			while ($x < $days_in_month) {
 				// Increase the day of the month and the number of cells drawn.
 				$x++;
 				$y++;
 				
 				$class = array();
+				
 				if ($y % 7 == 0) {
 					$class[] = "saturday";
 				}
+
 				// See if we're in the last row
 				if ($y / 7 > ($rows -1)) {
 					$class[] = "last_row";
 				}
 		?>
 		<li class="<?=implode(" ",$class)?>"><span><?=$x?></span>
-		<?
-			
+		<?php			
 			// Format the day with preceding 0.
 			$day = str_pad($x,2,"0",STR_PAD_LEFT);
 
@@ -86,28 +91,34 @@
   			if (count($items)) {
   				echo '<ul class="calendar_events">';
   				$xx = 0;
+				
 				foreach ($items as $item) {
 					if ($xx < 4) {
 						echo '<li><a href="'.$_GET["module_root"]."edit-check/?event=".$item["id"].'&date='.date("Y",$month)."-".date("m",$month)."-".$day.'">'.$item["title"]."</a></li>";
 					}
+					
 					$xx++;
 				}
+
 				echo '</ul>';
+				
 				if ($xx > 4) {
 					echo '<a class="search" href="'.$_GET["module_root"].'view-day/'.date("Y",$month)."-".date("m",$month)."-".$day.'/">View All</a>';
 				}
 			}
 		?>
 		</li>
-		<?
+		<?php
 			}
+			
 			$x = 0;
+			
 			while ($y % 7 != 0) {
 				$x++;
 				$y++;
 		?>
-		<li class="last_row<? if ($y % 7 == 0) { ?> saturday<? } ?>"><span class="not_active_month"><?=$x?></span></li>
-		<?
+		<li class="last_row<?php if ($y % 7 == 0) { ?> saturday<?php } ?>"><span class="not_active_month"><?=$x?></span></li>
+		<?php
 			}
 		?>
 	</ul>

@@ -1,4 +1,4 @@
-<?
+<?php
 	$months = array(
 		"01" => "January",
 		"02" => "February",
@@ -15,6 +15,7 @@
 	);
 	
 	$keywords = "";
+	
 	if (count($bigtree["commands"])) {
 		$start_date = $bigtree["commands"][0];
 		$end_date = $bigtree["commands"][1];

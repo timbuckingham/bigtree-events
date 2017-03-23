@@ -1,4 +1,4 @@
-<?
+<?php
 	$event = BTXEvents::get($_GET["event"]);
 	
 	if ($event["recurrence_type"]) {
@@ -14,10 +14,10 @@
 	</section>
 	<footer>
 		<a class="button" href="<?=MODULE_ROOT?>edit/<?=$event["id"]?>/"><span class="icon_small icon_small_calendar"></span> Edit All Recurrences</a>
-		<a class="button" href="<?=MODULE_ROOT?>separate/?event=<?=$event["id"]?>&date=<?=$_GET["date"]?>"><span class="icon_small icon_small_blog"></span> Separate Event</a>
+		<a class="button" href="<?=MODULE_ROOT?>separate/?event=<?=$event["id"]?>&date=<?=$_GET["date"]?><?php if (method_exists($admin, "drawCSRFTokenGET")) { $admin->drawCSRFTokenGET(); } ?>"><span class="icon_small icon_small_blog"></span> Separate Event</a>
 	</footer>
 </div>
-<?
+<?php
 	} else {
 		BigTree::redirect(MODULE_ROOT."edit/".$event["id"]."/");
 	}

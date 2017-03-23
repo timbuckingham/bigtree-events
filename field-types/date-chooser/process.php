@@ -1,4 +1,4 @@
-<?
+<?php
 	// Start date / end date
 	$raw_start = BigTree::dateFormat($bigtree["post_data"]["start_date"],"U");
 	$raw_end = BigTree::dateFormat($bigtree["post_data"]["end_date"],"U");
@@ -18,6 +18,7 @@
 	} else {
 		$bigtree["entry"]["all_day"] = "";
 		$bigtree["entry"]["start_time"] = date("H:i:s",strtotime($bigtree["post_data"]["start_time"]));
+		
 		if ($bigtree["post_data"]["end_time"]) {
 			// If the end time is before the start time and the event doesn't span multiple days, kill the end time.
 			if (strtotime($bigtree["post_data"]["end_time"]) < strtotime($bigtree["post_data"]["start_time"]) && !$bigtree["entry"]["end_date"]) {
@@ -36,6 +37,7 @@
 		$bigtree["entry"]["recurrence_detail"] = $bigtree["post_data"]["recurrence_detail"];
 
 		$raw_recurring_end = BigTree::dateFormat($bigtree["post_data"]["recurring_end_date"],"U");
+		
 		if ($raw_recurring_end) {
 			if ($raw_recurring_end > $raw_start) {
 				$bigtree["entry"]["recurring_end_date"] = date("Y-m-d",$raw_recurring_end);
@@ -54,4 +56,3 @@
 	$field["ignore"] = true;
 
 	BigTreeAutoModule::clearCache("btx_events_date_cache");
-?>

@@ -479,6 +479,34 @@
 		}
 
 		/*
+			Function: getEventInstances
+				Returns instances of an event.
+
+			Parameters:
+				event - An event array.
+				upcoming - Whether to return only upcoming instances (defaults to false)
+
+			Returns:
+				An array of event instances
+
+			See Also:
+				<getUpcomingEventInstances>
+		*/
+
+		static function getEventInstances($event,$upcoming = false) {
+			$instances = array();
+			$upcoming = $upcoming ? " AND end >= NOW()" : "";
+
+			$q = sqlquery("SELECT * FROM btx_events_date_cache WHERE event = '".sqlescape($event["id"])."' $upcoming ORDER BY start ASC");
+			while ($f = sqlfetch($q)) {
+				$f["instance"] = $f["id"];
+				$instances[] = array_merge($f,$event);
+			}
+
+			return $instances;
+		}
+
+		/*
 			Function: getEventsByDate
 				Returns event instances for a given date.
 			
@@ -877,6 +905,23 @@
 		}
 
 		/*
+			Function: getNumberOfEventsOnDate
+				Returns number of events occurring on a given date.
+			
+			Parameters:
+				date - The date (Y-m-d format) to pull events for.
+			
+			Returns:
+				A number.
+		*/
+		
+		static function getNumberOfEventsOnDate($date) {
+			$date = date("Y-m-d",strtotime($date));
+			$f = sqlfetch(sqlquery("SELECT COUNT(id) AS `count` FROM btx_events_date_cache WHERE start >= '$date 00:00:00' AND end <= '$date 23:59:59'"));
+			return $f["count"];
+		}
+
+		/*
 			Function: getRandomEvent
 				Returns a random event instance occurring in the future.
 			
@@ -1053,6 +1098,24 @@
 		}
 
 		/*
+			Function: getUpcomingEventInstances
+				Returns instances of an event that occur in the future.
+
+			Parameters:
+				event - An event ID or event array.
+
+			Returns:
+				An array of event instances
+
+			See Also:
+				<getEventInstances>
+		*/
+
+		static function getUpcomingEventInstances($event) {
+			return static::getEventInstances($event,true);
+		}
+
+		/*
 			Function: getUpcomingEvents
 				Returns an array of event instances occurring in the future ordered by those happening soonest.
 
@@ -1065,7 +1128,8 @@
 				An array of event instances.
 		*/
 
-		static function getUpcomingEvents($limit = 5,$featured = false,$page = 0) {
+		static function getUpcomingEvents($limit = 5,$featured = false,$page = 1) {
+			$page = $page ? ($page - 1) : 0;
 			$events = array();
 			if ($featured) {
 				$featured = " AND btx_events_events.featured = 'on' ";
@@ -1077,6 +1141,23 @@
 				$events[] = $event;
 			}
 			return $events;
+		}
+
+		/*
+			Function: getUpcomingEventsPageCount
+				Returns the number of pages of upcoming events.
+
+			Parameters:
+				per_page - The number of events per page.
+
+			Returns:
+				The number of pages.
+		*/
+
+		static function getUpcomingEventsPageCount($per_page = 5) {
+			$f = sqlfetch(sqlquery("SELECT COUNT(id) AS `count` FROM btx_events_date_cache WHERE end >= NOW()"));
+			$pages = ceil($f["count"] / $per_page);
+			return $pages ? $pages : 1;
 		}
 
 		/*
@@ -1094,7 +1175,7 @@
 				<getUpcomingEvents>
 		*/
 
-		static function getUpcomingFeaturedEvents($limit = 5,$page = 0) {
+		static function getUpcomingFeaturedEvents($limit = 5,$page = 1) {
 			return self::getUpcomingEvents($limit,true,$page);
 		}
 
@@ -1112,7 +1193,8 @@
 				An array of event instances.
 		*/
 
-		static function getUpcomingEventsInCategories($limit = 5,$categories = array(),$featured = false,$page = 0) {
+		static function getUpcomingEventsInCategories($limit = 5,$categories = array(),$featured = false,$page = 1) {
+			$page = $page ? ($page - 1) : 0;
 			$events = array();
 			if ($featured) {
 				$featured = " AND btx_events_events.featured = 'on' ";
@@ -1153,7 +1235,7 @@
 			Returns:
 				An array of event instances.
 		*/
-		static function getUpcomingEventsInCategoriesWithSubcategories($limit,$categories = array(),$featured = false,$page = 0) {
+		static function getUpcomingEventsInCategoriesWithSubcategories($limit,$categories = array(),$featured = false,$page = 1) {
 			$with_sub = $categories;
 			foreach ($categories as $cat) {
 				$with_sub = array_merge($with_sub,self::getSubcategoriesOfCategory($cat));
@@ -1177,7 +1259,7 @@
 				<getUpcomingEventsInCategories>
 		*/
 
-		static function getUpcomingFeaturedEventsInCategories($limit = 5,$categories = array(),$page = 0) {
+		static function getUpcomingFeaturedEventsInCategories($limit = 5,$categories = array(),$page = 1) {
 			return self::getUpcomingEventsInCategories($limit,$categories,true,$page);
 		}
 
@@ -1197,7 +1279,7 @@
 				<getUpcomingEventsInCategories>
 		*/
 
-		static function getUpcomingFeaturedEventsInCategoriesWithSubcategories($limit = 5,$categories = array(),$page = 0) {
+		static function getUpcomingFeaturedEventsInCategoriesWithSubcategories($limit = 5,$categories = array(),$page = 1) {
 			return self::getUpcomingEventsInCategoriesWithSubcategories($limit,$categories,true,$page);
 		}
 
@@ -1380,3 +1462,4 @@
 			return $parsed;
 		}
 	}
+	

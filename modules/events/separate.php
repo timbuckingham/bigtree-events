@@ -1,4 +1,8 @@
-<?
+<?php
+	if (method_exists($admin, "verifyCSRFToken")) {
+		$admin->verifyCSRFToken();
+	}
+
 	$event = BTXEvents::get($_GET["event"]);
 	
 	$canceled = json_decode($event["canceled_recurrences"],true);
@@ -24,6 +28,7 @@
 		$id = BigTreeAutoModule::createItem("btx_events_events",$event);
 		$admin->growl("Events","Separated Event");
 	}
+
 	// We're going to request a cancelation of an event
 	if ($permission_level == "e") {
 		// Ask to un-recur this event.
@@ -34,4 +39,3 @@
 	}
 	
 	BigTree::redirect(MODULE_ROOT."edit/$id/");
-?>
