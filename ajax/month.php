@@ -3,6 +3,10 @@
 		$month = $_GET["month"];
 	}
 
+	if (!defined("MODULE_ROOT")) {
+		define("MODULE_ROOT", $_GET["module_root"]);
+	}
+
 	$month = strtotime(date("F 1, Y",$month));
 	
 	// Get the events for this month
@@ -94,7 +98,7 @@
 				
 				foreach ($items as $item) {
 					if ($xx < 4) {
-						echo '<li><a href="'.$_GET["module_root"]."edit-check/?event=".$item["id"].'&date='.date("Y",$month)."-".date("m",$month)."-".$day.'">'.$item["title"]."</a></li>";
+						echo '<li><a href="'.MODULE_ROOT."edit-check/?event=".$item["id"].'&date='.date("Y",$month)."-".date("m",$month)."-".$day.'">'.$item["title"]."</a></li>";
 					}
 					
 					$xx++;
@@ -103,7 +107,7 @@
 				echo '</ul>';
 				
 				if ($xx > 4) {
-					echo '<a class="search" href="'.$_GET["module_root"].'view-day/'.date("Y",$month)."-".date("m",$month)."-".$day.'/">View All</a>';
+					echo '<a class="search" href="'.MODULE_ROOT.'view-day/'.date("Y",$month)."-".date("m",$month)."-".$day.'/">View All</a>';
 				}
 			}
 		?>

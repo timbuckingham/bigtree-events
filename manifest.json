@@ -2,7 +2,7 @@
     "type": "extension",
     "id": "com.fastspot.events",
     "version": "1.2",
-    "revision": 5,
+    "revision": 6,
     "compatibility": "4.2.4+",
     "title": "Events",
     "description": "A very fast (performance wise) events system that supports recurring events and a powerful class for pulling events into the front end of your site.",
