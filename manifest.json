@@ -1,8 +1,8 @@
 {
     "type": "extension",
     "id": "com.fastspot.events",
-    "version": "1.1",
-    "revision": 4,
+    "version": "1.2",
+    "revision": 5,
     "compatibility": "4.2.4+",
     "title": "Events",
     "description": "A very fast (performance wise) events system that supports recurring events and a powerful class for pulling events into the front end of your site.",
@@ -22,7 +22,7 @@
         "module_groups": [],
         "modules": [
             {
-                "id": "5",
+                "id": "3",
                 "group": null,
                 "name": "Events",
                 "route": "com.fastspot.events*events",
@@ -37,21 +37,21 @@
                 "extension": "com.fastspot.events",
                 "actions": [
                     {
-                        "id": "18",
-                        "module": "5",
+                        "id": "7",
+                        "module": "3",
                         "name": "View Events",
                         "route": "",
                         "in_nav": "on",
                         "form": null,
-                        "view": "5",
+                        "view": "4",
                         "report": null,
                         "class": "list",
                         "level": "0",
                         "position": "6"
                     },
                     {
-                        "id": "19",
-                        "module": "5",
+                        "id": "8",
+                        "module": "3",
                         "name": "Search",
                         "route": "search",
                         "in_nav": "on",
@@ -63,8 +63,8 @@
                         "position": "5"
                     },
                     {
-                        "id": "20",
-                        "module": "5",
+                        "id": "9",
+                        "module": "3",
                         "name": "Calendar",
                         "route": "calendar",
                         "in_nav": "on",
@@ -76,8 +76,8 @@
                         "position": "4"
                     },
                     {
-                        "id": "21",
-                        "module": "5",
+                        "id": "10",
+                        "module": "3",
                         "name": "Add Event",
                         "route": "add",
                         "in_nav": "on",
@@ -89,21 +89,21 @@
                         "position": "3"
                     },
                     {
-                        "id": "22",
-                        "module": "5",
+                        "id": "11",
+                        "module": "3",
                         "name": "View Categories",
                         "route": "categories",
                         "in_nav": "on",
                         "form": null,
-                        "view": "4",
+                        "view": "3",
                         "report": null,
                         "class": "category",
                         "level": "0",
                         "position": "2"
                     },
                     {
-                        "id": "23",
-                        "module": "5",
+                        "id": "12",
+                        "module": "3",
                         "name": "Add Category",
                         "route": "add-category",
                         "in_nav": "on",
@@ -115,8 +115,8 @@
                         "position": "1"
                     },
                     {
-                        "id": "24",
-                        "module": "5",
+                        "id": "13",
+                        "module": "3",
                         "name": "Edit Event",
                         "route": "edit",
                         "in_nav": "",
@@ -128,8 +128,8 @@
                         "position": "0"
                     },
                     {
-                        "id": "25",
-                        "module": "5",
+                        "id": "14",
+                        "module": "3",
                         "name": "Edit Category",
                         "route": "edit-category",
                         "in_nav": "",
@@ -143,8 +143,8 @@
                 ],
                 "views": [
                     {
-                        "id": "4",
-                        "module": "5",
+                        "id": "3",
+                        "module": "3",
                         "title": "Categories",
                         "description": "",
                         "type": "nested",
@@ -169,8 +169,8 @@
                         "related_form": null
                     },
                     {
-                        "id": "5",
-                        "module": "5",
+                        "id": "4",
+                        "module": "3",
                         "title": "Events",
                         "description": "",
                         "type": "searchable",
@@ -213,7 +213,7 @@
                 "forms": [
                     {
                         "id": "3",
-                        "module": "5",
+                        "module": "3",
                         "title": "Category",
                         "table": "btx_events_categories",
                         "fields": [
@@ -252,14 +252,14 @@
                             }
                         ],
                         "default_position": "Bottom",
-                        "return_view": "4",
+                        "return_view": "3",
                         "return_url": "",
                         "tagging": "",
                         "hooks": null
                     },
                     {
                         "id": "4",
-                        "module": "5",
+                        "module": "3",
                         "title": "Event",
                         "table": "btx_events_events",
                         "fields": [
@@ -342,7 +342,7 @@
                             }
                         ],
                         "default_position": "",
-                        "return_view": "5",
+                        "return_view": "4",
                         "return_url": "",
                         "tagging": "",
                         "hooks": {
