@@ -1012,14 +1012,16 @@
 
 		static function getSearchResultsInDateRange($query,$start_date,$end_date,$featured = false) {
 			$events = array();
+			$words = explode(" ",$query);
+			$qwords = array();
+
 			if ($featured) {
 				$featured = " AND btx_events_events.featured = 'on' ";
 			}
 
-			$words = explode(" ",$query);
-			$qwords = array();
 			if ($words) {
 				foreach ($words as $word) {
+					$word = sqlescape($word);
 					$qwords[] = "(btx_events_events.title LIKE '%$word%' OR btx_events_events.description LIKE '%$word%')";
 				}
 				$qwords = implode(" AND ",$qwords)." AND ";
@@ -1296,18 +1298,21 @@
 				An array of event instances ordered by soonest.
 		*/
 
-		static function getUpcomingSearchResults($query,$limit = 5,$featured = false) {
+		static function getUpcomingSearchResults($query, $limit = 5, $featured = false) {
 			$events = array();
+			$qwords = array();
+			$words = explode(" ",$query);
+
 			if ($featured) {
 				$featured = " AND btx_events_events.featured = 'on' ";
 			}
 
-			$words = explode(" ",$query);
-			$qwords = array();
 			if ($words) {
 				foreach ($words as $word) {
+					$word = sqlescape($word);
 					$qwords[] = "(btx_events_events.title LIKE '%$word%' OR btx_events_events.description LIKE '%$word%')";
 				}
+
 				$qwords = implode(" AND ",$qwords)." AND ";
 			} else {
 				$qwords = "";
@@ -1320,6 +1325,87 @@
 				$events[] = $event;
 			}
 			return $events;
+		}
+
+		/*
+			Function: getUpcomingSearchResultsPage
+				Returns a page of event instances matching a given query that are occurring in the future.
+			
+			Parameters:
+				query - The string to search for.
+				page - The page to return
+				per_page - The number of event instances to return per page.
+			
+			Returns:
+				An array of event instances ordered by soonest.
+		*/
+
+		static function getUpcomingSearchResultsPage($query, $page = 1, $per_page = 10) {
+			$events = array();
+			$words = explode(" ",$query);
+			$qwords = array();
+
+			if ($words) {
+				foreach ($words as $word) {
+					$word = sqlescape($word);
+					$qwords[] = "(btx_events_events.title LIKE '%$word%' OR btx_events_events.description LIKE '%$word%')";
+				}
+
+				$qwords = implode(" AND ",$qwords)." AND ";
+			} else {
+				$qwords = "";
+			}
+
+			$limit = (($page - 1) * $per_page).", $per_page";
+
+			$q = sqlquery("SELECT btx_events_date_cache.start,btx_events_date_cache.end,btx_events_date_cache.id as instance,btx_events_date_cache.title_route AS title_route, btx_events_date_cache.date_route AS date_route,btx_events_events.* FROM btx_events_events JOIN btx_events_date_cache WHERE btx_events_date_cache.event = btx_events_events.id AND $qwords btx_events_date_cache.end >= NOW() ORDER BY btx_events_date_cache.start ASC LIMIT $limit");
+
+			while ($f = sqlfetch($q)) {
+				$event = self::get($f);
+				$events[] = $event;
+			}
+
+			return $events;
+		}
+
+		/*
+			Function: getUpcomingSearchResultsPage
+				Returns the number of pages of event instances matching a given query that are occurring in the future.
+			
+			Parameters:
+				query - The string to search for.
+				per_page - The number of event instances per page.
+			
+			Returns:
+				An integer.
+		*/
+
+		static function getUpcomingSearchResultsPageCount($query, $per_page = 10) {
+			$events = array();
+			$words = explode(" ",$query);
+			$qwords = array();
+
+			if ($words) {
+				foreach ($words as $word) {
+					$word = sqlescape($word);
+					$qwords[] = "(btx_events_events.title LIKE '%$word%' OR btx_events_events.description LIKE '%$word%')";
+				}
+				
+				$qwords = implode(" AND ",$qwords)." AND ";
+			} else {
+				$qwords = "";
+			}
+
+			$limit = (($page - 1) * $per_page).", $per_page";
+
+			$f = sqlfetch(sqlquery("SELECT COUNT(btx_events_date_cache.id) AS `count`
+									FROM btx_events_events JOIN btx_events_date_cache
+									ON btx_events_date_cache.event = btx_events_events.id
+									WHERE $qwords btx_events_date_cache.end >= NOW()"));
+
+			$pages = ceil($f["count"] / $per_page);
+
+			return $pages ?: 1;
 		}
 
 		/*
@@ -1365,10 +1451,13 @@
 		static function searchResults($query) {
 			$words = explode(" ",$query);
 			$qwords = array();
+
 			if ($words) {
 				foreach ($words as $word) {
+					$word = sqlescape($word);
 					$qwords[] = "(title LIKE '%$word%' OR description LIKE '%$word%')";
 				}
+
 				$qwords = " AND ".implode(" AND ",$qwords);
 			} else {
 				$qwords = "";
@@ -1377,10 +1466,12 @@
 			$q = sqlquery("SELECT * FROM btx_events_events WHERE 1 $qwords ORDER BY id DESC");
 
 			$events = array();
+
 			while ($f = sqlfetch($q)) {
 				$event = self::get($f);
 				$events[] = $event;
 			}
+
 			return $events;
 		}
 
@@ -1396,21 +1487,24 @@
 				An array of decoded event entries from the database.
 		*/
 
-		static function searchResultsInCategory($query,$category) {
+		static function searchResultsInCategory($query, $category) {
 			$category = is_array($category) ? sqlescape($category["id"]) : sqlescape($category);
 			$with_sub = array_merge(array($category),self::getSubcategoriesOfCategory($category));
-
 			$cat_search = array();
+
 			foreach ($with_sub as $category) {
 				$cat_search[] = "btx_events_event_categories.category = '$category'";
 			}
 
 			$words = explode(" ",$query);
 			$qwords = array();
+
 			if ($words) {
 				foreach ($words as $word) {
+					$word = sqlescape($word);
 					$qwords[] = "(btx_events_events.title LIKE '%$word%' OR btx_events_events.description LIKE '%$word%')";
 				}
+
 				$qwords = " AND ".implode(" AND ",$qwords);
 			} else {
 				$qwords = "";
@@ -1419,10 +1513,12 @@
 			$q = sqlquery("SELECT DISTINCT(btx_events_event_categories.event),btx_events_events.* FROM btx_events_events JOIN btx_events_event_categories WHERE btx_events_events.id = btx_events_event_categories.event $qwords AND (".implode(" OR ",$cat_search).") ORDER BY id DESC");
 
 			$events = array();
+
 			while ($f = sqlfetch($q)) {
 				$event = self::get($f);
 				$events[] = $event;
 			}
+
 			return $events;
 		}
 		
