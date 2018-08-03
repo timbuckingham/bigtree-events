@@ -16,7 +16,6 @@
 ?>
 <div id="btx_events_calendar">
 	<header>
-		<a class="today" href="#<?=time()?>">Today is: <?=date("F j")?></a>
 		<nav>
 			<a href="#<?=($month-60*60)?>" class="previous month_button"><span>&laquo;</span></a>
 			<span><?=date("F Y",$month)?></span>
@@ -92,7 +91,8 @@
 
 			// See if there are any events for this day.
 			$items = $month_of_events[date("Y",$month)."-".date("m",$month)."-".$day];
-  			if (count($items)) {
+  			
+  			if (is_array($items) && count($items)) {
   				echo '<ul class="calendar_events">';
   				$xx = 0;
 				
